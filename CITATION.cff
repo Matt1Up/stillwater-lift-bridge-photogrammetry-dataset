@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it as below."
+type: dataset
+title: "Stillwater Lift Bridge | Stillwater, Minnesota, USA"
+abstract: >-
+  A complete drone photogrammetry image set of the Stillwater Lift Bridge, a 1931 vertical-lift
+  bridge over the St. Croix River, captured October 31, 2026 with a DJI FC9313 at native
+  4096x3072 resolution as 34 waypoint missions: stacked rings around both lift towers, 21 orbits
+  down the length of the bridge, two straight-down grids and six passes along its sides, flown on
+  five batteries under overcast sky. 2,223 images, GPS intact on every frame, original aircraft
+  filenames preserved, each image tagged with its mission; faces and license plates blurred in
+  350. All 2,223 solve in one OpenDroneMap model using GPS-neighbor matching; camera poses for
+  the original photos in COLMAP (FULL_OPENCV) and RealityScan XMP formats, 1.8 million tie points
+  and the full ODM solve with its settings are included, in a metric frame from the photos' GPS.
+  There is no physical scale reference.
+authors:
+  - family-names: Guertin
+    given-names: Matthew
+    website: "https://mattguertin.com"
+date-released: 2026-11-03
+version: "1.0.0"
+license: CC-BY-4.0
+keywords:
+  - photogrammetry
+  - drone
+  - uav
+  - aerial imagery
+  - 3D reconstruction
+  - structure from motion
+  - gaussian splatting
+  - dataset
+  - camera poses
+  - colmap
+  - opendronemap
+  - waypoint mission
+  - bridge
+  - historic structure
+  - repetitive structure
+repository-code: "https://github.com/Matt1Up/stillwater-lift-bridge-photogrammetry-dataset"

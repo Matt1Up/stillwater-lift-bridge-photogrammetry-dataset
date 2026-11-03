@@ -1,0 +1,9 @@
+# ODM 3.6.2, Docker image opendronemap/odm:gpu, run once on the 2,223 photos (camera solve only).
+# <project> holds images/ (the photos) and geo.txt (this folder's file).
+docker run --rm --gpus all -v <project>:/datasets/code opendronemap/odm:gpu \
+  --project-path /datasets \
+  --geo /datasets/code/geo.txt \
+  --matcher-neighbors 30 \
+  --feature-quality ultra \
+  --max-concurrency 8 \
+  --end-with opensfm

@@ -1,0 +1,3 @@
+Frame: ODM map frame (x east, y north, z up, meters) from origin {"latitude": 45.056708315665425, "longitude": -92.80238136113078, "altitude": 0.0}
+Applied to the RealityScan export: rotation 1.1282 deg, translation [-41.1647, -19.8093, 118.1431] m, scale 1.000000
+Fit over 2222 cameras: residual max 0.000000 m
