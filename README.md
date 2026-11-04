@@ -43,7 +43,7 @@ across both bridges. The lift span still rises for boats.
 ([Wikipedia](https://en.wikipedia.org/wiki/Stillwater_Bridge_(St._Croix_River)),
 [MnDOT](https://content.govdelivery.com/accounts/MNDOT/bulletins/2969025))
 
-I first scanned the bridge in 2020 with a Faro S150 laser scanner and never finished it. This
+I first scanned the bridge in 2020 with a Faro S150 laser scanner and wasn't able to finish it. This
 is the second attempt, with a drone. I waited for an overcast day, so there are no shadows
 anywhere in the set.
 
