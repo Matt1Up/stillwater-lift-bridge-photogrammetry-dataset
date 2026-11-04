@@ -54,12 +54,12 @@ anywhere in the set.
 The spans repeat almost exactly, and a solver that matches photos on what they look like alone
 can mistake one span for the next.
 
-**RealityScan** split the photos into 9 pieces. The largest held 2,047 of the 2,223. Inside it, a
+**[RealityScan](https://www.realityscan.com)** split the photos into 9 pieces. The largest held 2,047 of the 2,223. Inside it, a
 run of 18 photos sat about 45 m from where they were taken, about one span off. The level side
 passes were left out or stacked onto about two spans. Turning on GPS in RealityScan tilted the
 model instead: the drone's recorded GPS altitude shifted by up to 11.6 m over the day.
 
-**OpenDroneMap** solved it with `--matcher-neighbors 30`: each photo is compared only with the
+**[OpenDroneMap](https://github.com/OpenDroneMap/ODM)** solved it with `--matcher-neighbors 30`: each photo is compared only with the
 30 photos taken closest to it.
 Photos a span apart are then rarely compared at all. Two more settings made the difference:
 
