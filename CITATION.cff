@@ -9,7 +9,7 @@ abstract: >-
   down the length of the bridge, two straight-down grids and six passes along its sides, flown on
   five batteries under overcast sky. 2,223 images, GPS intact on every frame, original aircraft
   filenames preserved, each image tagged with its mission; faces and license plates blurred in
-  350. All 2,223 solve in one OpenDroneMap model using GPS-neighbor matching; camera poses for
+  350. 2,222 of the 2,223 solve in one OpenDroneMap model using GPS-neighbor matching; camera poses for
   the original photos in COLMAP (FULL_OPENCV) and RealityScan XMP formats, 1.8 million tie points
   and the full ODM solve with its settings are included, in a metric frame from the photos' GPS.
   There is no physical scale reference.

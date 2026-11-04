@@ -5,9 +5,9 @@ Saturday, October 31, 2026 as **34 waypoint missions**: stacked rings around bot
 21 orbits down the length of the bridge, two straight-down grids and six passes along its
 sides. Full-resolution originals with GPS intact, solved camera poses and 1.8 million tie points.
 
-Eight nearly identical truss spans make this a hard set to align. RealityScan could not keep
-them apart; **OpenDroneMap, matching each photo only against its GPS neighbors, solved all
-2,223 photos in one model**. The ODM solve and every setting used ship with the dataset.
+Seven nearly identical truss spans make this a hard set to align. RealityScan could not keep
+them apart; **OpenDroneMap, matching each photo only against its GPS neighbors, solved 2,222 of
+the 2,223 photos in one model**. The ODM solve and every setting used ship with the dataset.
 
 CC BY 4.0.
 
@@ -30,17 +30,17 @@ Sample photos: [a bridge orbit](https://huggingface.co/datasets/Matt1up/stillwat
 
 ## The bridge
 
-![All eight spans, from the side](preview/12.jpg)
+![All seven spans, from the side](preview/12.jpg)
 
 The Stillwater Lift Bridge opened in 1931, a vertical-lift bridge carrying the road across the
 St. Croix River between Stillwater, Minnesota and Houlton, Wisconsin. It is 1,050 ft (320 m)
-long: a 140 ft (43 m) lift span between two towers and seven fixed steel truss spans. It was
+long: seven steel truss spans, including a 140 ft (43 m) lift span between two towers. It was
 listed on the National Register of Historic Places in 1989.
 
 It closed to cars on August 2, 2017, when the new St. Croix Crossing opened, and
 reopened on June 1, 2020 for people on foot and on bikes, as part of a 4.7-mile loop trail
 across both bridges. The lift span still rises for boats.
-([Wikipedia](https://en.wikipedia.org/wiki/Stillwater_Lift_Bridge),
+([Wikipedia](https://en.wikipedia.org/wiki/Stillwater_Bridge_(St._Croix_River)),
 [MnDOT](https://content.govdelivery.com/accounts/MNDOT/bulletins/2969025))
 
 I first scanned the bridge in 2020 with a Faro S150 laser scanner and never finished it. This
@@ -59,9 +59,8 @@ run of 18 photos sat about 45 m from where they were taken, about one span off. 
 passes were left out or stacked onto about two spans. Turning on GPS in RealityScan tilted the
 model instead: the drone's recorded GPS altitude shifted by up to 11.6 m over the day.
 
-**OpenDroneMap** solved it, using the technique Maurice Sobiera suggested on the ODM forum for my
-previous dataset ([thread](https://community.opendronemap.org/t/abandoned-graffiti-mill-inside-and-out-1-896-images-mini-5-pro-poses-scale-bar-cc-by-4-0/27009)):
-`--matcher-neighbors 30`, so each photo is compared only with the 30 photos taken closest to it.
+**OpenDroneMap** solved it with `--matcher-neighbors 30`: each photo is compared only with the
+30 photos taken closest to it.
 Photos a span apart are then rarely compared at all. Two more settings made the difference:
 
 - **Height above takeoff instead of GPS altitude.** All the flights took off from the same
@@ -70,10 +69,10 @@ Photos a span apart are then rarely compared at all. Two more settings made the 
   height.
 - **Full resolution** (`--feature-quality ultra`), 10,000 features per photo.
 
-The result: **all 2,223 photos in one model**, every flight within 2–7 m of its GPS track (median per flight),
-and the level side passes running the full length of the bridge, 0.5–1.3 % from their GPS length.
-One photo (`DJI_20261031122835_0682_D.JPG`) was placed 115 m from where it was taken; it is left
-out of the published poses and still ships as a photo.
+The result: **2,222 of 2,223 photos in one model**, every flight within 2–7 m of its GPS track
+(median per flight), and the level side passes running the full length of the bridge, 0.5–1.3 %
+from their GPS length. The one miss (`DJI_20261031122835_0682_D.JPG`) was placed 115 m from where
+it was taken; it is left out of the poses and still ships as a photo.
 
 The ODM cameras were then loaded into RealityScan with their positions locked, to build and
 texture the mesh shown here. The published poses are ODM's positions and orientations exactly,
@@ -81,8 +80,8 @@ with the lens calibration RealityScan refined ([below](#camera-poses)).
 
 ## How it was flown
 
-Every mission but the side passes was planned in QGIS with FlyPath; the six side passes were set
-up on site. A photo every 3 seconds throughout, five batteries, 10:42 to 13:55.
+Every mission but the side passes was planned in [QGIS](https://github.com/qgis/QGIS) with
+[FlyPath](https://github.com/dronnix-io/FlyPath); the six side passes were set up on site. A photo every 3 seconds throughout, five batteries, 10:42 to 13:55.
 
 **The towers** — five stacked rings around each lift tower, flown as two missions per tower,
 then two rings around both.
@@ -142,7 +141,7 @@ part of the dataset.
 | images | 2,223 |
 | size | 20.06 GB |
 | missions | 34 — 5 tower, 16 bridge orbits, 5 large orbits, 2 grids, 6 side passes |
-| aligned | **2,223 / 2,223** in one OpenDroneMap model; 2,222 poses published |
+| aligned | **2,222 / 2,223**, one OpenDroneMap model |
 | camera poses | COLMAP and RealityScan XMP, for the original photos ([below](#camera-poses)) |
 | tie points | 1,768,660 (RealityScan) · 1,045,349 (ODM) |
 | ODM solve | command, GPS file, configuration and reconstruction ([below](#the-odm-solve)) |
@@ -169,71 +168,38 @@ real observations. Everything here is the native readout.
 
 ## Blurred faces and plates
 
-The bridge is open to people on foot and on bikes, and many were on it while it was flown. In **350 of the 2,223 images**, faces (338
-images) or license plates (31 images) are blurred; nothing else in those images was changed.
-**The other 1,873 are camera originals**, byte for byte.
+People were on the bridge while it was flown. In **350 of the 2,223 images**, faces or license
+plates are blurred, found with SAM 3 and blurred only where large enough to recognize (faces
+30 px and up, plates 25–39 px). Nothing else in those images changed, and **the other 1,873 are
+camera originals**, byte for byte. The camera solve used the unblurred originals.
 
-- **Found with SAM 3** (Meta's Segment Anything 3), asking for faces and heads in every angled
-  photo, and for license plates in the photos over the parking lot at the west end. The 368
-  straight-down grid photos were not searched: from 40 m, faces there are a few pixels across.
-- **Blurred when big enough to matter:** faces and heads 30 px or larger, and plates 25 to 39 px.
-  Smaller ones are too few pixels to recognize or read. Larger "plates" were all the bridge's own
-  clearance signs, and they were left alone, as was the graffiti face at the east end.
-- **Only the face or plate is touched:** 763 face areas and 42 plates, each blurred to its own
-  outline and a small margin.
-
-The camera solve — ODM's, RealityScan's and the published poses — was computed from the
-unblurred originals.
-
-In the 350, the image keeps its 4096 × 3072 size and was re-encoded with the camera's own JPEG
-quantization tables; EXIF and DJI XMP are copied byte for byte. The EXIF thumbnail was remade
-from the blurred pixels, and DJI's embedded 960 × 720 preview image was removed, since it would
-have shown the faces. The list is in
+The 350 keep their size, the camera's JPEG tables and all EXIF and DJI XMP; DJI's embedded preview
+image was removed and the thumbnail remade, so neither shows a face. The list is in
 [`manifest/bridge/blurred.txt`](https://github.com/Matt1Up/stillwater-lift-bridge-photogrammetry-dataset/blob/main/manifest/bridge/blurred.txt)
-and in the `edited` column of `images.csv`.
+and the `edited` column of `images.csv`.
 
 ## Coordinate frame
 
-**There is no physical scale reference in this capture.** The frame is OpenDroneMap's, fitted to
-the photos' GPS positions and the corrected heights in `odm/geo.txt`.
-
-| | |
-|---|---|
-| axes | x east, y north, z up, in meters |
-| origin | latitude 45.056708, longitude −92.802381 |
-| z | height above takeoff + 118.5 m — a constant offset, not an elevation |
-| solved camera vs its GPS position | 2.3 m median |
-
-So sizes and distances are right to within what consumer GPS allows over a 400 m site: fine for
-orientation and approximate measures, not for survey work. RealityScan wrote its export in its
-own frame, the same cameras turned 1.13° and shifted; the poses here were moved back into ODM's
-frame with one rigid transform (no scaling, 0.0000 m error over 2,222 cameras), recorded in
+Meters, x east, y north, z up, from origin 45.056708, −92.802381; z is height above takeoff plus
+118.5 m, not an elevation. **There is no physical scale reference**: the frame comes from GPS, and
+solved cameras sit 2.3 m (median) from their GPS positions. Fine for orientation and approximate
+measures, not for survey work. Details in
 [`poses/bridge/frame.txt`](https://github.com/Matt1Up/stillwater-lift-bridge-photogrammetry-dataset/blob/main/poses/bridge/frame.txt).
 
 ## Camera poses
 
-ODM's camera positions and orientations, with the lens calibration RealityScan refined while
-they were locked, for **the original photos**: the files in `bridge/images/`, as they are. No
-undistortion is needed to use them.
-
-- **One shared lens.** Every photo has the same calibration, written as one camera per image in
-  `cameras.txt` for tools that expect that.
-- **OpenCV distortion.** COLMAP's `FULL_OPENCV` model: radial k1, k2, k3, with the tangential and
-  k4–k6 terms zero. The coefficients describe the original 4096 × 3072 photos.
-- **In meters**, in the [frame above](#coordinate-frame).
-- **2,222 poses**, every photo but the one ODM misplaced
-  ([`dropped.txt`](https://github.com/Matt1Up/stillwater-lift-bridge-photogrammetry-dataset/blob/main/poses/bridge/dropped.txt)).
+ODM's cameras with RealityScan's refined lens, for **the original photos** as they are, no
+undistortion needed: 2,222 poses, one shared `FULL_OPENCV` calibration (written once per image),
+in the frame above.
 
 | file | GitHub | Hugging Face | size |
 |---|---|---|---|
 | `cameras.txt`, `images.txt` | [`poses/bridge/colmap/`](https://github.com/Matt1Up/stillwater-lift-bridge-photogrammetry-dataset/tree/main/poses/bridge/colmap) | `bridge/poses/colmap/` | 0.6 MB |
-| `points3D.txt` — the 1,768,660 tie points, position and color | too big for GitHub | [`bridge/poses/colmap/points3D.txt`](https://huggingface.co/datasets/Matt1up/stillwater-lift-bridge-photogrammetry/resolve/main/bridge/poses/colmap/points3D.txt) | 0.09 GB |
-| RealityScan XMP, one per photo, named after it | [`poses/bridge/xmp/`](https://github.com/Matt1Up/stillwater-lift-bridge-photogrammetry-dataset/tree/main/poses/bridge/xmp) | `bridge/poses/xmp/` | 3 MB |
+| `points3D.txt`, 1,768,660 tie points | too big for GitHub | [`bridge/poses/colmap/points3D.txt`](https://huggingface.co/datasets/Matt1up/stillwater-lift-bridge-photogrammetry/resolve/main/bridge/poses/colmap/points3D.txt) | 0.09 GB |
+| RealityScan XMP, one per photo | [`poses/bridge/xmp/`](https://github.com/Matt1Up/stillwater-lift-bridge-photogrammetry-dataset/tree/main/poses/bridge/xmp) | `bridge/poses/xmp/` | 3 MB |
 
-Checksums for all of them are in
+Checksums are in
 [`manifest/bridge/poses.sha256`](https://github.com/Matt1Up/stillwater-lift-bridge-photogrammetry-dataset/blob/main/manifest/bridge/poses.sha256).
-RealityScan does not export which photos saw each tie point, so `points3D.txt` has no tracks and
-the point lines in `images.txt` are empty.
 
 ## The ODM solve
 
@@ -245,7 +211,7 @@ Everything needed to run the solve again, or to use ODM's result directly:
 | [`odm/geo.txt`](odm/geo.txt) | each photo's GPS position, with height above takeoff + 118.5 m |
 | [`odm/opensfm-config.yaml`](odm/opensfm-config.yaml) | the OpenSfM configuration ODM generated from those options |
 | [`odm/camera_models.json`](odm/camera_models.json), [`odm/reference_lla.json`](odm/reference_lla.json) | the lens model and the frame's origin |
-| [`odm/reconstruction-cameras.json`](odm/reconstruction-cameras.json) | ODM's solved cameras, all 2,223 |
+| [`odm/reconstruction-cameras.json`](odm/reconstruction-cameras.json) | ODM's solved cameras |
 | `odm/reconstruction.json` (Hugging Face only, 0.35 GB) | the full reconstruction, with its 1,045,349 points |
 
 ODM ran the camera solve only (`--end-with opensfm`): about 6 hours 20 minutes for features,
@@ -253,13 +219,8 @@ ODM ran the camera solve only (`--end-with opensfm`): about 6 hours 20 minutes f
 
 ## Gaussian splatting
 
-Poses and tie points are what 3DGS and NeRF pipelines ingest, so the scan trains without
-running structure-from-motion first. Tools that accept only pinhole cameras need undistorted
-copies first; COLMAP's `image_undistorter` makes them from these files.
-
-The mix of views is the point of the set: rings around the towers, orbits down the length,
-straight-down grids and level passes under the trusses. Train on everything, or use the
-`mission` column to see what each part of the capture adds.
+The poses and tie points load straight into 3DGS and NeRF pipelines, no structure-from-motion
+needed. Pinhole-only tools need undistorted copies first (COLMAP's `image_undistorter`).
 
 ## Download details
 
@@ -302,14 +263,6 @@ git clone https://github.com/Matt1Up/stillwater-lift-bridge-photogrammetry-datas
 ```
 
 More detail in **[docs/download.md](https://github.com/Matt1Up/stillwater-lift-bridge-photogrammetry-dataset/blob/main/docs/download.md)**.
-
-## Notes
-
-- The orbits look out past the bridge to the riverbanks, the parking lot at the west end and
-  the water.
-- The mission maps are drawn from each photo's own GPS position over the dataset's own tie
-  points — no satellite or map imagery
-  ([`scripts/make-mission-maps.py`](https://github.com/Matt1Up/stillwater-lift-bridge-photogrammetry-dataset/blob/main/scripts/make-mission-maps.py)).
 
 ## License
 

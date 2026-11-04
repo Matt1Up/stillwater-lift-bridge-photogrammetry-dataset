@@ -14,10 +14,10 @@ compare.
 | | |
 |---|---|
 | images | 2,223 |
-| solved | **2,223 / 2,223**, one model (OpenDroneMap 3.6.2); 2,222 poses published |
+| solved | **2,222 / 2,223**, one model (OpenDroneMap 3.6.2) |
 | solver | OpenDroneMap for the cameras; RealityScan for the mesh, with the cameras locked |
 
-**The spans repeat.** Eight truss spans look nearly the same, and a matcher that compares every
+**The spans repeat.** Seven truss spans look nearly the same, and a matcher that compares every
 photo with every other will find convincing matches between different spans. RealityScan, run
 on these photos with default settings, split them into 9 pieces and placed a run of photos about
 one span from where they were taken.
